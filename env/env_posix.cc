@@ -1123,9 +1123,7 @@ Env* Env::Default() {
   // of their construction, having this call here guarantees that
   // the destructor of static PosixEnv will go first, then the
   // the singletons of ThreadLocalPtr.
-#ifdef INIT_PHOTON_IN_ROCKSDB
   PhotonEnv::Singleton();
-#endif
   ThreadLocalPtr::InitSingletons();
   CompressionContextCache::InitSingleton();
   INIT_SYNC_POINT_SINGLETONS();
