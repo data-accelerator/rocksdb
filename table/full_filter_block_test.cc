@@ -217,7 +217,6 @@ TEST_F(FullFilterBlockTest, SingleChunk) {
 }  // namespace rocksdb
 
 int main(int argc, char** argv) {
-  rocksdb::PhotonEnv::Singleton();
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
