@@ -67,7 +67,6 @@ Status TransactionDBMutexImpl::Lock() {
 }
 
 Status TransactionDBMutexImpl::TryLockFor(int64_t timeout_time) {
-  // return mutex_.lock(timeout_time) == 0 ? Status::OK() : Status::TimedOut(Status::SubCode::kMutexTimeout);
   bool locked = true;
 
   if (timeout_time == 0) {
