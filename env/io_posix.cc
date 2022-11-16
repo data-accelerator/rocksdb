@@ -361,8 +361,7 @@ Status PosixRandomAccessFile::Prefetch(uint64_t offset, size_t n) {
   if (!use_direct_io()) {
     ssize_t r = 0;
 #ifdef OS_LINUX
-    char ptr[n];
-    r = photon::iouring_pread(fd_, ptr, n, offset, -1);
+    r = readahead(fd_, offset, n);
 #endif
 #ifdef OS_MACOSX
     radvisory advice;
