@@ -1096,11 +1096,13 @@ PhotonEnv::PhotonEnv() {
   int ret = photon::init(photon::INIT_EVENT_IOURING, photon::INIT_IO_NONE);
   if (ret != 0) {
     LOG_FATAL("photon init failed");
+    abort();
   }
   // Max 8 vcpu. Hardcoded for now.
   ret = photon::std::work_pool_init(8, photon::INIT_EVENT_IOURING, photon::INIT_IO_NONE);
   if (ret != 0) {
     LOG_FATAL("work pool init failed");
+    abort();
   }
 }
 
