@@ -55,11 +55,6 @@ set(ENABLE_URING ON CACHE INTERNAL "Enable iouring")
 FetchContent_MakeAvailable(photon)
 set(PHOTON_INCLUDE_DIR ${photon_SOURCE_DIR}/include/)
 
-option(INIT_PHOTON_IN_ROCKSDB "INIT PHOTON IN ROCKSDB" OFF)
-if(INIT_PHOTON_IN_ROCKSDB)
-    add_definitions(-DINIT_PHOTON_IN_ROCKSDB)
-endif()
-
 option(WITH_JEMALLOC "build with JeMalloc" OFF)
 option(WITH_SNAPPY "build with SNAPPY" OFF)
 option(WITH_LZ4 "build with lz4" OFF)
