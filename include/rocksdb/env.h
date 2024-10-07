@@ -25,6 +25,7 @@
 #include <vector>
 #include "rocksdb/status.h"
 #include "rocksdb/thread_status.h"
+#include "port/port.h"
 
 #ifdef _WIN32
 // Windows API macro interference
@@ -1453,5 +1454,27 @@ Status NewHdfsEnv(Env** hdfs_env, const std::string& fsname);
 // operations, reporting results to variables in PerfContext.
 // This is a factory method for TimedEnv defined in utilities/env_timed.cc.
 Env* NewTimedEnv(Env* base_env);
+
+class PhotonEnv {
+public:
+    static PhotonEnv& Singleton() {
+        // 8 vCPU. Hardcoded for now.
+#ifdef PHOTON_ENABLE_URING
+        static PhotonEnv instance(8, photon::INIT_EVENT_IOURING);
+#else
+        static PhotonEnv instance(8, photon::INIT_EVENT_EPOLL);
+#endif
+        return instance;
+    }
+
+    PhotonEnv(PhotonEnv const&) = delete;
+    PhotonEnv(PhotonEnv&&) = delete;
+    PhotonEnv& operator=(PhotonEnv const&) = delete;
+    PhotonEnv& operator=(PhotonEnv&&) = delete;
+
+private:
+    PhotonEnv(int vcpu_num, int ev_engine);
+    ~PhotonEnv();
+};
 
 }  // namespace rocksdb
